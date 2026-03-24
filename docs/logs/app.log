@@ -1,0 +1,15 @@
+2026-03-24 00:49:27,392 | INFO     | quant_trading:info:28 - Database schema initialization completed.
+2026-03-24 00:49:27,393 | INFO     | quant_trading:info:28 - Scheduler run-once mode started at 2026-03-23T16:49:27.393590+00:00 (UTC).
+2026-03-24 00:49:27,468 | INFO     | quant_trading:info:28 - Daily data update completed: {'provider': 'MockMarketDataProvider', 'stock_count': 3, 'price_inserted': 3, 'price_updated': 0, 'symbols_processed': 3}
+2026-03-24 00:49:27,471 | INFO     | quant_trading:info:28 - Scheduled job daily_data_update completed in 75 ms.
+2026-03-24 00:49:27,471 | INFO     | quant_trading:info:28 - Scheduler run-once mode finished.
+2026-03-24 15:26:32.088 | INFO     | app.db.init_db:init_db:13 - Database schema initialization completed.
+2026-03-24 15:26:32.306 | INFO     | app.services.strategy.factor_engine:run:229 - Factor engine completed: FactorCalculationResult(symbols_processed=3, trade_dates=27, records_inserted=81, records_updated=0)
+2026-03-24 15:26:32.315 | INFO     | app.services.strategy.strategy_engine:run:291 - Strategy engine completed: StrategyRunResult(trade_date=datetime.date(2026, 3, 24), strategy_name='multi_factor_v1', status='SUCCESS', timing_passed=True, reason='Benchmark data not found. Timing filter skipped.', selected_count=3, buy_count=3, sell_count=0, hold_count=0)
+2026-03-24 15:26:32.337 | INFO     | app.services.risk.engine:evaluate_and_log_risk_events:297 - Risk evaluation completed: account=paper_account date=2026-03-24 events=1 inserted=1 resolved=0
+2026-03-24 15:26:32.346 | INFO     | app.services.simulation.engine:run:698 - Paper trading simulation completed: SimulationResult(account_name='paper_account', trade_date=datetime.date(2026, 3, 24), signal_count=3, orders_created=3, buy_count=3, sell_count=0, rejected_count=0, holding_count=3, cash=53306.08, market_value=946410.0, total_asset=999716.08, position_ratio=0.946679)
+2026-03-24 15:26:37.427 | INFO     | app.db.init_db:init_db:13 - Database schema initialization completed.
+2026-03-24 15:26:37.619 | INFO     | app.services.strategy.factor_engine:run:229 - Factor engine completed: FactorCalculationResult(symbols_processed=3, trade_dates=27, records_inserted=0, records_updated=81)
+2026-03-24 15:26:37.630 | INFO     | app.services.strategy.strategy_engine:run:291 - Strategy engine completed: StrategyRunResult(trade_date=datetime.date(2026, 3, 24), strategy_name='multi_factor_v1', status='SUCCESS', timing_passed=True, reason='Benchmark data not found. Timing filter skipped.', selected_count=3, buy_count=3, sell_count=0, hold_count=0)
+2026-03-24 15:26:37.648 | INFO     | app.services.risk.engine:evaluate_and_log_risk_events:297 - Risk evaluation completed: account=paper_account date=2026-03-24 events=0 inserted=0 resolved=0
+2026-03-24 15:26:37.663 | INFO     | app.services.simulation.engine:run:698 - Paper trading simulation completed: SimulationResult(account_name='paper_account', trade_date=datetime.date(2026, 3, 24), signal_count=3, orders_created=3, buy_count=3, sell_count=0, rejected_count=0, holding_count=3, cash=53306.08, market_value=946410.0, total_asset=999716.08, position_ratio=0.946679)

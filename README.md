@@ -252,10 +252,18 @@ docker compose -f docker/docker-compose.yml --env-file docker/.env.example confi
 - 引入策略参数寻优/网格搜索
 - 增加多账户与多策略组合管理
 - 增加通知系统（企业微信/钉钉/Telegram）
+<<<<<<< HEAD
 - 引入可观测性（Prometheus + Grafana）
+=======
+- 引入可观测性（Prometheus + Grafana）
+>>>>>>> cc26c140ab75982a625801f1e3e9b1339672ec2e
 
 ## 发布资料
 
 - 变更历史：`CHANGELOG.md`
 - 版本策略：`docs/versioning.md`
+<<<<<<< HEAD
 - 当前发布说明：`docs/releases/v0.1.0.md`
+=======
+- 当前发布说明：`docs/releases/v0.1.0.md`
+>>>>>>> cc26c140ab75982a625801f1e3e9b1339672ec2e

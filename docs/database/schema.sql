@@ -281,4 +281,8 @@ CREATE TABLE IF NOT EXISTS job_runs (
 
 CREATE INDEX IF NOT EXISTS idx_job_runs_job_name_run_at ON job_runs(job_name, run_at DESC);
 
+<<<<<<< HEAD
 COMMIT;
+=======
+COMMIT;
+>>>>>>> cc26c140ab75982a625801f1e3e9b1339672ec2e

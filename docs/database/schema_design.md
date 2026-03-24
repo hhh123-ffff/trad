@@ -84,4 +84,8 @@
 ## 5. PostgreSQL 与 SQLite 兼容策略
 
 - `schema.sql` 为 PostgreSQL 主方案（包含 `JSONB`、`TIMESTAMPTZ`、触发器）。
+<<<<<<< HEAD
 - SQLite 开发模式下通过 SQLAlchemy 模型建表，不直接执行该 SQL。
+=======
+- SQLite 开发模式下通过 SQLAlchemy 模型建表，不直接执行该 SQL。
+>>>>>>> cc26c140ab75982a625801f1e3e9b1339672ec2e

@@ -31,4 +31,8 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 ### Fixed
 
 - 修复调度器在缺失 `apscheduler` 依赖时的报错可读性，改为明确安装提示。
+<<<<<<< HEAD
 - 优化 Docker 构建上下文，避免将无关大目录打入镜像构建上下文。
+=======
+- 优化 Docker 构建上下文，避免将无关大目录打入镜像构建上下文。
+>>>>>>> cc26c140ab75982a625801f1e3e9b1339672ec2e
