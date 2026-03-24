@@ -1,0 +1,140 @@
+﻿services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: quant_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-quant_trading}
+      POSTGRES_USER: ${POSTGRES_USER:-quant}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-quant}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-quant} -d ${POSTGRES_DB:-quant_trading}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: ../docker/backend.Dockerfile
+    image: quant-backend:latest
+    container_name: quant_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      APP_NAME: Quant Trading Backend
+      APP_ENV: docker
+      APP_DEBUG: "false"
+      API_PREFIX: /api/v1
+      HOST: 0.0.0.0
+      PORT: "8000"
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-quant}:${POSTGRES_PASSWORD:-quant}@postgres:5432/${POSTGRES_DB:-quant_trading}
+      LOG_LEVEL: INFO
+      LOG_PATH: /app/logs/app.log
+      CORS_ORIGINS: "*"
+      DEFAULT_ACCOUNT: paper_account
+      DATA_PROVIDER: mock
+      TUSHARE_TOKEN: ""
+      STRATEGY_NAME: multi_factor_v1
+      STRATEGY_TOP_N: "5"
+      REBALANCE_WEEKDAY: "0"
+      BENCHMARK_SYMBOL: 000300.SH
+      TIMING_MA_WINDOW: "20"
+      WEIGHT_MOMENTUM_20: "0.35"
+      WEIGHT_MOMENTUM_60: "0.25"
+      WEIGHT_VOLUME: "0.20"
+      WEIGHT_VOLATILITY: "0.20"
+      INITIAL_CAPITAL: "1000000"
+      TRADE_FEE_RATE: "0.0003"
+      MIN_TRADE_LOT: "100"
+      RISK_SINGLE_POSITION_LIMIT: "0.35"
+      RISK_STOP_LOSS_PCT: "-0.08"
+      RISK_MAX_POSITION_RATIO: "0.95"
+      RISK_MAX_DRAWDOWN_WARNING: "0.10"
+      RISK_MAX_DRAWDOWN_CRITICAL: "0.20"
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    volumes:
+      - backend_logs:/app/logs
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/health', timeout=5).read()"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  scheduler:
+    image: quant-backend:latest
+    container_name: quant_scheduler
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      backend:
+        condition: service_healthy
+    environment:
+      APP_NAME: Quant Trading Backend
+      APP_ENV: docker
+      APP_DEBUG: "false"
+      API_PREFIX: /api/v1
+      HOST: 0.0.0.0
+      PORT: "8000"
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-quant}:${POSTGRES_PASSWORD:-quant}@postgres:5432/${POSTGRES_DB:-quant_trading}
+      LOG_LEVEL: INFO
+      LOG_PATH: /app/logs/scheduler.log
+      CORS_ORIGINS: "*"
+      DEFAULT_ACCOUNT: paper_account
+      DATA_PROVIDER: mock
+      TUSHARE_TOKEN: ""
+      STRATEGY_NAME: multi_factor_v1
+      STRATEGY_TOP_N: "5"
+      REBALANCE_WEEKDAY: "0"
+      BENCHMARK_SYMBOL: 000300.SH
+      TIMING_MA_WINDOW: "20"
+      WEIGHT_MOMENTUM_20: "0.35"
+      WEIGHT_MOMENTUM_60: "0.25"
+      WEIGHT_VOLUME: "0.20"
+      WEIGHT_VOLATILITY: "0.20"
+      INITIAL_CAPITAL: "1000000"
+      TRADE_FEE_RATE: "0.0003"
+      MIN_TRADE_LOT: "100"
+      RISK_SINGLE_POSITION_LIMIT: "0.35"
+      RISK_STOP_LOSS_PCT: "-0.08"
+      RISK_MAX_POSITION_RATIO: "0.95"
+      RISK_MAX_DRAWDOWN_WARNING: "0.10"
+      RISK_MAX_DRAWDOWN_CRITICAL: "0.20"
+      SCHEDULER_TIMEZONE: ${SCHEDULER_TIMEZONE:-Asia/Shanghai}
+      SCHEDULER_DATA_CRON: ${SCHEDULER_DATA_CRON:-30 15 * * 1-5}
+      SCHEDULER_STRATEGY_CRON: ${SCHEDULER_STRATEGY_CRON:-40 15 * * 1-5}
+      SCHEDULER_PAPER_TRADING_CRON: ${SCHEDULER_PAPER_TRADING_CRON:-50 15 * * 1-5}
+      SCHEDULER_BACKTEST_CRON: ${SCHEDULER_BACKTEST_CRON:-0 9 * * 6}
+    volumes:
+      - backend_logs:/app/logs
+    command: ["python", "-m", "app.scheduler.runner"]
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: ../docker/frontend.Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api/v1}
+    image: quant-frontend:latest
+    container_name: quant_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: ${NEXT_PUBLIC_API_BASE_URL:-http://localhost:8000/api/v1}
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+
+volumes:
+  postgres_data:
+  backend_logs:

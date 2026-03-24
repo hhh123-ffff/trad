@@ -1,0 +1,39 @@
+﻿# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local env files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# Local databases / runtime data
+*.db
+*.sqlite
+*.sqlite3
+
+# Node / Next
+node_modules/
+.next/
+out/
+
+# Build artifacts
+dist/
+build/
+
+# Misc
+coverage/
+htmlcov/

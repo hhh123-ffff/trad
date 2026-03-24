@@ -1,0 +1,17 @@
+﻿# Node artifacts
+node_modules/
+.next/
+out/
+
+# Env files
+.env.local
+.env
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

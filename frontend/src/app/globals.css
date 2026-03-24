@@ -1,0 +1,251 @@
+﻿:root {
+  --bg-start: #fff6e8;
+  --bg-end: #e8f1fa;
+  --surface: rgba(255, 255, 255, 0.86);
+  --surface-strong: rgba(255, 255, 255, 0.95);
+  --ink: #12233a;
+  --muted: #5f6f85;
+  --line: rgba(18, 35, 58, 0.12);
+  --primary: #0e5ea8;
+  --accent: #d97706;
+  --positive: #1f9d58;
+  --danger: #be3d2b;
+  --shadow: 0 16px 40px rgba(18, 35, 58, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--font-body), "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, rgba(255, 214, 153, 0.3) 0%, transparent 48%),
+    radial-gradient(circle at 86% 12%, rgba(123, 175, 227, 0.24) 0%, transparent 46%),
+    linear-gradient(150deg, var(--bg-start), var(--bg-end));
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.42;
+  background-image: linear-gradient(rgba(18, 35, 58, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 35, 58, 0.05) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(circle at center, black 35%, transparent 100%);
+}
+
+.app-body {
+  min-height: 100vh;
+}
+
+.shell-root {
+  min-height: 100vh;
+  background: transparent !important;
+}
+
+.shell-sider {
+  background: var(--surface-strong) !important;
+  border-right: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.brand-block {
+  padding: 22px 18px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand-title {
+  margin: 0 !important;
+  color: var(--primary) !important;
+  font-family: var(--font-title), "Noto Sans SC", sans-serif;
+  letter-spacing: 0.04em;
+}
+
+.brand-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.shell-menu {
+  border-inline-end: none !important;
+  padding: 12px;
+  background: transparent !important;
+}
+
+.shell-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 18px !important;
+  background: transparent !important;
+}
+
+.header-title {
+  margin: 0 !important;
+  font-family: var(--font-title), "Noto Sans SC", sans-serif;
+}
+
+.header-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.shell-content {
+  padding: 4px 16px 24px;
+}
+
+.page-container {
+  max-width: 1420px;
+  margin: 0 auto;
+}
+
+.page-enter {
+  animation: rise-in 0.55s ease both;
+}
+
+.stagger > * {
+  opacity: 0;
+  animation: rise-in 0.6s ease both;
+}
+
+.stagger > *:nth-child(1) {
+  animation-delay: 0.04s;
+}
+
+.stagger > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stagger > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+
+.stagger > *:nth-child(4) {
+  animation-delay: 0.22s;
+}
+
+.stagger > *:nth-child(5) {
+  animation-delay: 0.28s;
+}
+
+.metric-card,
+.section-card {
+  border: 1px solid var(--line);
+  background: var(--surface) !important;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(6px);
+}
+
+.metric-card .ant-card-body {
+  padding: 18px;
+}
+
+.metric-title {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.metric-value {
+  margin: 0 !important;
+  line-height: 1.2 !important;
+  font-family: var(--font-title), "Noto Sans SC", sans-serif;
+}
+
+.metric-hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.metric-positive .metric-value {
+  color: var(--positive);
+}
+
+.metric-warning .metric-value {
+  color: var(--accent);
+}
+
+.metric-danger .metric-value {
+  color: var(--danger);
+}
+
+.section-card .ant-card-head {
+  border-bottom: 1px solid var(--line);
+}
+
+.section-title {
+  margin: 0 !important;
+  font-family: var(--font-title), "Noto Sans SC", sans-serif;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.filter-bar {
+  margin-bottom: 14px;
+}
+
+.table-highlight-positive {
+  color: var(--positive);
+  font-weight: 600;
+}
+
+.table-highlight-danger {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.level-tag-info {
+  background: rgba(14, 94, 168, 0.12);
+  color: var(--primary);
+}
+
+.level-tag-warning {
+  background: rgba(217, 119, 6, 0.12);
+  color: var(--accent);
+}
+
+.level-tag-critical {
+  background: rgba(190, 61, 43, 0.14);
+  color: var(--danger);
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 992px) {
+  .shell-content {
+    padding: 0 10px 16px;
+  }
+
+  .page-container {
+    max-width: 100%;
+  }
+
+  .header-title {
+    font-size: 15px !important;
+  }
+
+  .header-subtitle {
+    font-size: 11px;
+  }
+}

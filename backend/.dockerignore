@@ -1,0 +1,16 @@
+﻿# Python cache and test artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local runtime files
+.env
+*.db
+logs/
+
+# Development files
+tests/
+.vscode/
+.idea/
